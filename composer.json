@@ -1,0 +1,21 @@
+{
+    "require": {
+        "silex/silex": "^2.0",
+        "vlucas/phpdotenv": "^2.4",
+        "monolog/monolog": "^1.22",
+        "twig/twig": "^2.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.7.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "BentlerDesign\\": "lib/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests"
+        ]
+    }
+}
