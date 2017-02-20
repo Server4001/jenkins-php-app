@@ -24,9 +24,6 @@ class CreateRequestValidatorTest extends PHPUnit_Framework_TestCase
 
     public function testValidReturnsFalseFromMissingRequestData()
     {
-        echo PHP_EOL;
-        var_dump(getenv('PHPUNIT_TEST_DATABASE'));
-        echo PHP_EOL;
         $request = new Request([], []);
         $valid = $this->validator->valid($request);
         $errors = $this->validator->getErrors();
