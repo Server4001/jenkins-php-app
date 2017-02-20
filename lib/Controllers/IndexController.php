@@ -8,12 +8,17 @@
 
 namespace BentlerDesign\Controllers;
 
+use BentlerDesign\Models\Dogs;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Response;
 
 class IndexController implements ControllerProviderInterface
 {
+    /**
+     * @var null|Dogs
+     */
+    private $dogsModel = null;
+
     /**
      * Returns routes to connect to the given application.
      *
@@ -23,6 +28,8 @@ class IndexController implements ControllerProviderInterface
      */
     public function connect(Application $app)
     {
+        $this->dogsModel = new Dogs($app['database']);
+
         /** @var \Silex\ControllerCollection $collection */
         $collection = $app['controllers_factory'];
 
@@ -31,8 +38,14 @@ class IndexController implements ControllerProviderInterface
         return $collection;
     }
 
-    public function getIndex(Application $app): Response
+    public function getIndex(Application $app): string
     {
+        /** @var \Twig_Environment $twig */
+        $twig = $app['twig'];
+        $dogs = $this->dogsModel->listAllDogs();
 
+        return $twig->render('index.twig', [
+            'dogs' => $dogs,
+        ]);
     }
 }

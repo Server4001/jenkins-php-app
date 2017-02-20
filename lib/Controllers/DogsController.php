@@ -8,6 +8,9 @@
 
 namespace BentlerDesign\Controllers;
 
+use BentlerDesign\Models\Dogs;
+use BentlerDesign\Validators\CreateRequestValidator;
+use Exception;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DogsController implements ControllerProviderInterface
 {
+    /**
+     * @var null|Dogs
+     */
+    private $dogsModel = null;
+
     /**
      * Returns routes to connect to the given application.
      *
@@ -24,22 +32,67 @@ class DogsController implements ControllerProviderInterface
      */
     public function connect(Application $app)
     {
+        $this->dogsModel = new Dogs($app['database']);
+
         /** @var \Silex\ControllerCollection $collection */
         $collection = $app['controllers_factory'];
 
         $collection->get('/', [$this, 'listDogs']);
-        $collection->post('/', [$this, 'createDog']);
+        $collection->post('', [$this, 'createDog']);
 
         return $collection;
     }
 
-    public function listDogs(Application $app): JsonResponse
+    public function listDogs(): JsonResponse
     {
+        $dogs = $this->dogsModel->listAllDogs();
 
+        return new JsonResponse([
+            'status' => 'success',
+            'data' => [
+                'dogs' => $dogs,
+            ],
+        ]);
     }
 
     public function createDog(Application $app, Request $request): JsonResponse
     {
+        /** @var \Psr\Log\LoggerInterface $logger */
+        $logger = $app['monolog'];
+        $validator = new CreateRequestValidator();
 
+        if (!$validator->valid($request)) {
+            return new JsonResponse([
+                'status' => 'fail',
+                'data' => [
+                    'errors' => $validator->getErrors(),
+                ],
+            ]);
+        }
+
+        try {
+            $dogId = $this->dogsModel->createDog($request->request->get('name'), $request->request->get('breed'));
+        } catch (Exception $e) {
+            $logger->error(json_encode([
+                'error' => 'exception_thrown',
+                'exception_message' => $e->getMessage(),
+                'exception_code' => $e->getCode(),
+                'exception_trace' => $e->getTraceAsString(),
+            ]));
+
+            return new JsonResponse([
+                'status' => 'error',
+                'data' => [
+                    'message' => $e->getMessage(),
+                ],
+            ]);
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'data' => [
+                'dog_id' => $dogId,
+            ],
+        ]);
     }
 }

@@ -25,6 +25,8 @@ use BentlerDesign\Providers\DatabaseProvider;
 use Dotenv\Dotenv;
 use Silex\Application;
 use Silex\Provider\MonologServiceProvider;
+use Silex\Provider\TwigServiceProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 $config = new Dotenv(PROJECT_ROOT . '/config', '.env');
 $config->load();
@@ -44,7 +46,24 @@ $app->register(new MonologServiceProvider(), [
     'monolog.level' => getenv('LOG_LEVEL'),
 ]);
 
+$app->register(new TwigServiceProvider(), [
+    'twig.path' => PROJECT_ROOT . '/lib/Views',
+]);
+
 $app->mount('/', new IndexController());
 $app->mount('/dogs/v1', new DogsController());
+
+$app->before(function (Request $request) {
+    $contentType = $request->headers->get('Content-Type');
+
+    if (is_null($contentType)) {
+        $contentType = '';
+    }
+    if (0 === strpos($contentType, 'application/json')) {
+        $data = json_decode($request->getContent(), true);
+
+        $request->request->replace(is_array($data) ? $data : []);
+    }
+});
 
 $app->run();
