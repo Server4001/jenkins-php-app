@@ -9,7 +9,6 @@
 namespace BentlerDesign\Tests\Integration;
 
 use Dotenv\Dotenv;
-use Exception;
 use FilesystemIterator;
 use PDO;
 use PHPUnit_Framework_TestCase;
@@ -49,17 +48,23 @@ class IntegrationBase extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-
+        $this->truncateAllTables();
     }
 
     public function tearDown()
     {
-
+        $this->truncateAllTables();
     }
 
     public static function tearDownAfterClass()
     {
+        // Drop the test database.
+        $databaseName = self::$databaseName;
+        $dropDatabaseSql = <<<SQL
+DROP DATABASE IF EXISTS `{$databaseName}`;    
+SQL;
 
+        self::$pdo->exec($dropDatabaseSql);
     }
 
     protected static function getDatabaseName(): string
@@ -103,9 +108,38 @@ SQL;
 
         /** @var \SplFileInfo $file */
         foreach ($files as $file) {
-//            $sql = file_get_contents($file->getPathname());
+            $sql = file_get_contents($file->getPathname());
 
-//            self::$pdo->exec($sql);
+            self::$pdo->exec($sql);
+        }
+    }
+
+    protected function getAllDatabaseTables($databaseName): array
+    {
+        $tablesSql = <<<SQL
+SELECT t.TABLE_NAME FROM information_schema.tables AS t
+WHERE t.TABLE_SCHEMA = :schema;
+SQL;
+
+        $statement = self::$pdo->prepare($tablesSql);
+
+        $statement->execute([
+            'schema' => $databaseName,
+        ]);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    protected function truncateAllTables()
+    {
+        // Get the names of all tables in the test database.
+        $tableNames = self::getAllDatabaseTables(self::$databaseName);
+
+        foreach ($tableNames as $record) {
+            $tableName = $record['TABLE_NAME'];
+
+            // Truncate the table.
+            self::$pdo->exec("TRUNCATE TABLE {$tableName};");
         }
     }
 }

@@ -12,15 +12,5 @@ use BentlerDesign\Tests\Integration\IntegrationBase;
 
 class DogsTest extends IntegrationBase
 {
-    public function testBlah()
-    {
-
-        $statement = self::$pdo->prepare('SELECT * FROM dogs;');
-        $statement->execute();
-
-        while ($row = $statement->fetchAll(\PDO::FETCH_ASSOC)) {
-            var_dump($row);
-        }
-        $this->assertTrue(true);
-    }
+    
 }
