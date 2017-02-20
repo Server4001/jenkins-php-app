@@ -10,15 +10,6 @@ define('PROJECT_ROOT', dirname(__DIR__));
 
 require_once PROJECT_ROOT . '/app/Bootstrap.php';
 
-set_error_handler(function($errorNumber, $errorString, $errorFile, $errorLine) {
-    // error suppressed with @
-    if (error_reporting() === 0) {
-        return;
-    }
-
-    throw new ErrorException($errorString, 0, $errorNumber, $errorFile, $errorLine);
-});
-
 use BentlerDesign\Controllers\DogsController;
 use BentlerDesign\Controllers\IndexController;
 use BentlerDesign\Providers\DatabaseProvider;
