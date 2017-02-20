@@ -46,6 +46,7 @@ class DatabaseProvider implements ServiceProviderInterface
 
             return new PDO($dsn, $config['DB_USER'], $config['DB_PASS'], [
                 PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ]);
         };
     }
