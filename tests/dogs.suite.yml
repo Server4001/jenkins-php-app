@@ -1,0 +1,8 @@
+class_name: DogsTester
+modules:
+    enabled:
+        - \Helper\Dogs
+        - REST:
+            url: http://localhost:8082/dogs/v1/
+            depends: PhpBrowser
+            part: Json
