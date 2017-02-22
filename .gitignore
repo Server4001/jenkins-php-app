@@ -4,3 +4,5 @@
 /config/.env
 /phpunit.xml.local
 /tests/coverage
+
+tests/_output/*
