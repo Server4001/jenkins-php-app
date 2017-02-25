@@ -108,8 +108,10 @@ SQL;
 
         $statement = $this->pdo->prepare($sql);
 
-        return $statement->execute([
+        $statement->execute([
             'id' => $dogId,
         ]);
+
+        return ($statement->rowCount() === 1);
     }
 }

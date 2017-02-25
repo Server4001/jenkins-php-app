@@ -152,7 +152,7 @@ class DogsController implements ControllerProviderInterface
         ]);
     }
 
-    public function deleteDog($dogId)
+    public function deleteDog($dogId): JsonResponse
     {
         $deleted = $this->dogsModel->deleteDog((int)$dogId);
 
@@ -165,9 +165,6 @@ class DogsController implements ControllerProviderInterface
             ], 404);
         }
 
-        return new JsonResponse([
-            'status' => 'success',
-            'data' => [],
-        ], 204);
+        return new JsonResponse(null, 204);
     }
 }
