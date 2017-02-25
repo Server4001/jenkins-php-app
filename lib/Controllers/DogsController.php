@@ -37,8 +37,12 @@ class DogsController implements ControllerProviderInterface
         /** @var \Silex\ControllerCollection $collection */
         $collection = $app['controllers_factory'];
 
-        $collection->get('/', [$this, 'listDogs']);
+        $collection->get('', [$this, 'listDogs']);
         $collection->post('', [$this, 'createDog']);
+        $collection->get('/{dogId}', [$this, 'getDog']);
+        $collection->put('/{dogId}', [$this, 'updateDog']);
+        $collection->patch('/{dogId}', [$this, 'updateDog']);
+        $collection->delete('/{dogId}', [$this, 'deleteDog']);
 
         return $collection;
     }
@@ -67,7 +71,7 @@ class DogsController implements ControllerProviderInterface
                 'data' => [
                     'errors' => $validator->getErrors(),
                 ],
-            ]);
+            ], 400);
         }
 
         try {
@@ -85,14 +89,85 @@ class DogsController implements ControllerProviderInterface
                 'data' => [
                     'message' => $e->getMessage(),
                 ],
-            ]);
+            ], 500);
+        }
+
+        $statusCode = 201;
+        $headers = ['Location' => $request->getUri() . $dogId];
+        $data = [
+            'status' => 'success',
+            'data' => [
+                'dog_id' => $dogId,
+            ],
+        ];
+
+        return new JsonResponse($data, $statusCode, $headers);
+    }
+
+    public function getDog($dogId): JsonResponse
+    {
+        $dog = $this->dogsModel->getDog((int)$dogId);
+
+        if (count($dog) < 1) {
+            return new JsonResponse([
+                'status' => 'fail',
+                'data' => [
+                    'message' => 'Unable to find dog.',
+                ],
+            ], 404);
         }
 
         return new JsonResponse([
             'status' => 'success',
             'data' => [
-                'dog_id' => $dogId,
+                'dog' => $dog,
             ],
         ]);
+    }
+
+    public function updateDog($dogId, Request $request): JsonResponse
+    {
+        $columns = [
+            'name' => $request->request->get('name'),
+            'breed' => $request->request->get('breed'),
+        ];
+
+        $updated = $this->dogsModel->updateDog((int)$dogId, $columns);
+        $dog = $this->dogsModel->getDog((int)$dogId);
+
+        if (!$updated || !$dog) {
+            return new JsonResponse([
+                'status' => 'fail',
+                'data' => [
+                    'message' => 'Unable to update dog.',
+                ],
+            ], 404);
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'data' => [
+                'dog' => $dog,
+            ],
+        ]);
+    }
+
+    public function deleteDog($dogId)
+    {
+        $deleted = $this->dogsModel->deleteDog((int)$dogId);
+
+        if (!$deleted) {
+            return new JsonResponse([
+                'status' => 'fail',
+                'data' => [
+                    'message' => 'Unable to delete dog.',
+                ],
+            ], 404);
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'data' => [],
+        ], 204);
     }
 }
