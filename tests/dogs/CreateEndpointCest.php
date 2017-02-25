@@ -8,8 +8,7 @@ class CreateEndpointCest
 
     public function _after(DogsTester $I)
     {
-        $I->sendDELETE($this->dogId);
-        $I->seeResponseCodeIs(204);
+        $I->deleteDog($this->dogId);
     }
 
     // tests
