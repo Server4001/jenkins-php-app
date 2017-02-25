@@ -42,4 +42,22 @@ class DogsTester extends \Codeception\Actor
 
         return $this;
     }
+
+    public function seeDog(int $dogId, string $dogName, string $dogBreed): DogsTester
+    {
+        $this->sendGET($dogId);
+
+        $this->seeResponseCodeIs(200);
+        $this->seeResponseIsJson();
+        $this->seeResponseContainsJson([
+            'status' => 'success',
+            'data' => [
+                'id' => $dogId,
+                'name' => $dogName,
+                'breed' => $dogBreed,
+            ],
+        ]);
+
+        return $this;
+    }
 }

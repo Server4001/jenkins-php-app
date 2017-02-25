@@ -23,16 +23,6 @@ class CreateEndpointCest
         $header = $I->grabHttpHeader('location');
         $I->seeHeaderContains($this->dogId, $header, 'location header contains dog id');
 
-        $I->sendGET($this->dogId);
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseIsJson();
-        $I->seeResponseContainsJson([
-            'status' => 'success',
-            'data' => [
-                'id' => $this->dogId,
-                'name' => $this->dogName,
-                'breed' => $this->dogBreed,
-            ],
-        ]);
+        $I->seeDog($this->dogId, $this->dogName, $this->dogBreed);
     }
 }
