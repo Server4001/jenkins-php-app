@@ -58,4 +58,58 @@ SQL;
 
         return (int)$this->pdo->lastInsertId();
     }
+
+    public function getDog(int $dogId): array
+    {
+        $sql = <<<SQL
+SELECT * FROM dogs
+WHERE id = :id;
+SQL;
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'id' => $dogId,
+        ]);
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateDog(int $dogId, array $columns): bool
+    {
+        if (count($columns) < 1) {
+            return true;
+        }
+
+        $sql = [];
+        $params = [];
+
+        if (isset($columns['name'])) {
+            $sql[] = 'name = :name';
+            $params['name'] = $columns['name'];
+        }
+        if (isset($columns['breed'])) {
+            $sql[] = 'breed = :breed';
+            $params['breed'] = $columns['breed'];
+        }
+
+        $sql = 'UPDATE dogs SET ' . implode(', ', $sql) . ' WHERE id = :id;';
+        $params['id'] = $dogId;
+
+        $statement = $this->pdo->prepare($sql);
+
+        return $statement->execute($params);
+    }
+
+    public function deleteDog(int $dogId): bool
+    {
+        $sql = <<<SQL
+DELETE FROM dogs WHERE id = :id;
+SQL;
+
+        $statement = $this->pdo->prepare($sql);
+
+        return $statement->execute([
+            'id' => $dogId,
+        ]);
+    }
 }
