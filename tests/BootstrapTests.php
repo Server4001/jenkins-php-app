@@ -6,6 +6,8 @@
  * @author       Brice Bentler <me@bricebentler.com>
  */
 
-define('PROJECT_ROOT', dirname(__DIR__));
+if (!defined('PROJECT_ROOT')) {
+    define('PROJECT_ROOT', dirname(__DIR__));
+}
 
 require_once PROJECT_ROOT . '/app/Bootstrap.php';
