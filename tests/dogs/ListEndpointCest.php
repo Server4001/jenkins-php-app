@@ -2,12 +2,18 @@
 
 class ListEndpointCest
 {
+    private $dogId = null;
+    private $dogName = 'Poochie';
+    private $dogBreed = 'Labrador';
+
     public function _before(DogsTester $I)
     {
+        $this->dogId = $I->createDog($this->dogName, $this->dogBreed);
     }
 
     public function _after(DogsTester $I)
     {
+        $I->deleteDog($this->dogId);
     }
 
     // tests
@@ -18,11 +24,12 @@ class ListEndpointCest
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
-            "id" => "4",
-            "name" => "Poochie",
-            "breed" => "Labrador",
-            "created_at" => "2017-02-20 02:10:31",
-            "updated_at" => "2017-02-20 06:08:00",
+            'status' => 'success',
+        ]);
+        $I->seeResponseContainsJson([
+            'id' => $this->dogId,
+            'name' => $this->dogName,
+            'breed' => $this->dogBreed,
         ]);
     }
 }

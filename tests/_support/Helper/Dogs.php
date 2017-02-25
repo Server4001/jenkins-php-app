@@ -8,5 +8,15 @@ use Codeception\Module;
 
 class Dogs extends Module
 {
-
+    /**
+     * Assert that a header string value contains the given sub-string.
+     *
+     * @param string $needle
+     * @param string $haystack
+     * @param string $message
+     */
+    public function seeHeaderContains(string $needle, string $haystack, string $message)
+    {
+        $this->assertContains($needle, $haystack, $message);
+    }
 }
