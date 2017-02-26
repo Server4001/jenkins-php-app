@@ -28,3 +28,5 @@ modules:
             user: ''
             password: ''
             dump: tests/_data/dump.sql
+params:
+  - config/.env

@@ -1,0 +1,12 @@
+class_name: IntegrationTester
+modules:
+    enabled:
+        - \Helper\Integration
+        - Db:
+            dsn: 'mysql:host=%DB_HOST%;port=%DB_PORT%;dbname=%DB_NAME%'
+            user: '%DB_USER%'
+            password: '%DB_PASS%'
+            dump: tests/_data/dump.sql
+            populate: true
+            cleanup: true
+            reconnect: true
