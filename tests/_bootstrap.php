@@ -4,4 +4,4 @@ if (!defined('PROJECT_ROOT')) {
     define('PROJECT_ROOT', dirname(__DIR__));
 }
 
-require_once PROJECT_ROOT . '/vendor/autoload.php';
+require_once PROJECT_ROOT . '/app/Bootstrap.php';

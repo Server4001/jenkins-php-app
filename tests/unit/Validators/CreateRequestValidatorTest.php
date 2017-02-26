@@ -5,7 +5,7 @@
  * @copyright    Copyright (c) 2017 Bentler Design (www.bricebentler.com)
  * @author       Brice Bentler <me@bricebentler.com>
  */
- 
+
 namespace BentlerDesign\Tests\Unit\Validators;
 
 use BentlerDesign\Validators\CreateRequestValidator;
@@ -72,4 +72,5 @@ class CreateRequestValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $errors);
         $this->assertCount(0, $errors);
     }
+
 }
