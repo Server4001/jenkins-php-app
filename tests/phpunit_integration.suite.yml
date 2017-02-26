@@ -1,0 +1,4 @@
+class_name: Phpunit_integrationTester
+modules:
+    enabled:
+        - \Helper\Phpunit_integration

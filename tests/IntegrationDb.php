@@ -6,7 +6,7 @@
  * @author       Brice Bentler <me@bricebentler.com>
  */
  
-namespace BentlerDesign\Tests\Integration;
+namespace BentlerDesign\Tests;
 
 use Dotenv\Dotenv;
 use FilesystemIterator;
@@ -14,7 +14,7 @@ use PDO;
 use PHPUnit_Framework_TestCase;
 use RegexIterator;
 
-class IntegrationBase extends PHPUnit_Framework_TestCase
+class IntegrationDb extends PHPUnit_Framework_TestCase
 {
     /**
      * @var null|string

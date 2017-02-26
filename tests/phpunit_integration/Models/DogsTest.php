@@ -5,15 +5,15 @@
  * @copyright    Copyright (c) 2017 Bentler Design (www.bricebentler.com)
  * @author       Brice Bentler <me@bricebentler.com>
  */
- 
-namespace BentlerDesign\Tests\Integration\Models;
+
+namespace BentlerDesign\Tests\PhpunitIntegration\Models;
 
 use BentlerDesign\Models\Dogs;
-use BentlerDesign\Tests\Integration\IntegrationBase;
+use BentlerDesign\Tests\IntegrationDb;
 use DateTime;
 use PDO;
 
-class DogsTest extends IntegrationBase
+class DogsTest extends IntegrationDb
 {
     /** @var null|Dogs */
     private $dogsModel = null;
