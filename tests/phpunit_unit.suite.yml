@@ -1,0 +1,4 @@
+class_name: Phpunit_unitTester
+modules:
+    enabled:
+        - \Helper\Phpunit_unit

@@ -16,9 +16,9 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class UnitTester extends \Codeception\Actor
+class Phpunit_unitTester extends \Codeception\Actor
 {
-    use _generated\UnitTesterActions;
+    use _generated\Phpunit_unitTesterActions;
 
    /**
     * Define custom actions here

@@ -6,7 +6,7 @@
  * @author       Brice Bentler <me@bricebentler.com>
  */
 
-namespace BentlerDesign\Tests\Unit\Validators;
+namespace BentlerDesign\Tests\PhpunitUnit\Validators;
 
 use BentlerDesign\Validators\CreateRequestValidator;
 use PHPUnit_Framework_TestCase;
@@ -72,5 +72,4 @@ class CreateRequestValidatorTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $errors);
         $this->assertCount(0, $errors);
     }
-
 }
