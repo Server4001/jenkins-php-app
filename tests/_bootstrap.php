@@ -1,5 +1,11 @@
-<?php
-// This is global bootstrap for autoloading
+<?php declare(strict_types=1);
+/**
+ * @category     Tests
+ * @package      JenkinsPhpApp
+ * @copyright    Copyright (c) 2017 Bentler Design (www.bricebentler.com)
+ * @author       Brice Bentler <me@bricebentler.com>
+ */
+
 if (!defined('PROJECT_ROOT')) {
     define('PROJECT_ROOT', dirname(__DIR__));
 }
