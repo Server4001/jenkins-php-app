@@ -3,7 +3,7 @@ modules:
     enabled:
         - \Helper\Integration
         - Db:
-            dsn: 'mysql:host=%DB_HOST%;port=%DB_PORT%;dbname=%DB_NAME%'
+            dsn: 'mysql:host=%DB_HOST%;port=%DB_PORT%;dbname=%CODECEPT_MYSQL_DBNAME%'
             user: '%DB_USER%'
             password: '%DB_PASS%'
             dump: tests/_data/dump.sql

@@ -1,5 +1,3 @@
-use jenkinsphp_test;
-
 CREATE TABLE IF NOT EXISTS dogs (
   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
