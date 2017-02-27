@@ -6,7 +6,7 @@
  * @author       Brice Bentler <me@bricebentler.com>
  */
  
-namespace BentlerDesign\Tests;
+namespace BentlerDesign\Tests\Bootstrappers;
 
 use Dotenv\Dotenv;
 use FilesystemIterator;

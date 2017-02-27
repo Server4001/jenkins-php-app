@@ -9,7 +9,7 @@
 namespace BentlerDesign\Tests\PhpunitIntegration\Models;
 
 use BentlerDesign\Models\Dogs;
-use BentlerDesign\Tests\IntegrationDb;
+use BentlerDesign\Tests\Bootstrappers\IntegrationDb;
 use DateTime;
 use PDO;
 
