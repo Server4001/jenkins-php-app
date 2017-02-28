@@ -16,6 +16,8 @@ use RegexIterator;
 
 class IntegrationDb extends PHPUnit_Framework_TestCase
 {
+    const TEST_DATABASE_NAME = 'jenkinsphp_test';
+
     /**
      * @var null|string
      */
@@ -72,7 +74,7 @@ SQL;
         $databaseName = getenv('PHPUNIT_TEST_DATABASE');
 
         if ($databaseName === false) {
-            $databaseName = 'jenkinsphp_test';
+            $databaseName = self::TEST_DATABASE_NAME;
         }
 
         return $databaseName;
