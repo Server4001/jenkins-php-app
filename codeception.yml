@@ -21,4 +21,4 @@ coverage:
         - lib/Providers/*.php
         - lib/Validators/*.php
 params:
-    - tests/Bootstrappers/env.php
+    - config/.env
