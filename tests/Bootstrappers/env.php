@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+/**
+ * @category     Bootstrappers
+ * @package      JenkinsPhpApp
+ * @copyright    Copyright (c) 2017 Bentler Design (www.bricebentler.com)
+ * @author       Brice Bentler <me@bricebentler.com>
+ */
 
 if (!defined('PROJECT_ROOT')) {
     define('PROJECT_ROOT', dirname(__DIR__, 2));

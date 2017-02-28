@@ -1,9 +1,19 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * @category     DogsApiTests
+ * @package      JenkinsPhpApp
+ * @copyright    Copyright (c) 2017 Bentler Design (www.bricebentler.com)
+ * @author       Brice Bentler <me@bricebentler.com>
+ */
 
 class CreateEndpointCest
 {
     private $dogName = 'Sgt. Barkley';
     private $dogBreed = 'Bulldog';
+
+    /**
+     * @var null|int
+     */
     private $dogId = null;
 
     public function _after(DogsTester $I)

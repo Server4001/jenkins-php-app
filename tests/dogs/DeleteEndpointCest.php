@@ -1,4 +1,10 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * @category     DogsApiTests
+ * @package      JenkinsPhpApp
+ * @copyright    Copyright (c) 2017 Bentler Design (www.bricebentler.com)
+ * @author       Brice Bentler <me@bricebentler.com>
+ */
 
 class DeleteEndpointCest
 {
