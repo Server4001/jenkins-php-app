@@ -53,10 +53,7 @@ class DogsTest extends Unit
         $breed = 'Mutt';
 
         // Create a dog record.
-        $affected = $this->pdo->exec("INSERT INTO dogs SET `name` = '{$name}', breed = '{$breed}';");
-        $this->assertSame(1, $affected);
-
-        $id = (int)$this->pdo->lastInsertId();
+        $id = $this->createDogRecord($name, $breed);
 
         // Call the getDog() model method, and assert results.
         $dog = $this->dogsModel->getDog($id);
@@ -71,5 +68,33 @@ class DogsTest extends Unit
         $this->assertEquals($id, $dog['id']);
         $this->assertEquals($name, $dog['name']);
         $this->assertEquals($breed, $dog['breed']);
+    }
+
+    public function testDeleteDogRemovesDogFromDatabase()
+    {
+        $name = 'Spot';
+        $breed = 'Dalmation';
+
+        // Create a dog record.
+        $id = $this->createDogRecord($name, $breed);
+
+        // Call the model's deleteDog() method, and assert results.
+        $deleted = $this->dogsModel->deleteDog($id);
+
+        $this->assertTrue($deleted);
+
+        $this->tester->cantSeeInDatabase('dogs', [
+            'id' => $id,
+            'name' => $name,
+            'breed' => $breed,
+        ]);
+    }
+
+    private function createDogRecord(string $name, string $breed): int
+    {
+        $affected = $this->pdo->exec("INSERT INTO dogs SET `name` = '{$name}', breed = '{$breed}';");
+        $this->assertSame(1, $affected);
+
+        return (int)$this->pdo->lastInsertId();
     }
 }
