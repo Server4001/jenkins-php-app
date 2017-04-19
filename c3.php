@@ -4,11 +4,16 @@
 
 /**
  * C3 - Codeception Code Coverage
+ * THIS IS A CUSTOM ROLLED VERSION OF C3. IT ENSURES THAT THE CODECEPTION AUTOLOADER IS CALLED.
  *
  * @author tiger
+ * @author Brice Bentler
  */
 
 // $_SERVER['HTTP_X_CODECEPTION_CODECOVERAGE_DEBUG'] = 1;
+
+
+require_once PROJECT_ROOT . '/vendor/codeception/codeception/autoload.php';
 
 if (isset($_COOKIE['CODECEPTION_CODECOVERAGE'])) {
     $cookie = json_decode($_COOKIE['CODECEPTION_CODECOVERAGE'], true);
