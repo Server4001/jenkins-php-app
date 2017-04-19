@@ -34,7 +34,7 @@ if (getenv('LOG_LEVEL') === false) {
 if ((int)getenv('ENABLE_CODECEPTION') === 1) {
     // Codeception code coverage tool.
     define('C3_CODECOVERAGE_ERROR_LOG_FILE', getenv('LOG_FILE'));
-    require_once PROJECT_ROOT . '/vendor/codeception/c3/c3.php';
+    require_once PROJECT_ROOT . '/c3.php';
 }
 
 $app = new Application();
